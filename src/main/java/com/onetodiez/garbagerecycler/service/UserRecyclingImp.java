@@ -26,13 +26,11 @@ public class UserRecyclingImp implements UserRecyclingService{
 
 	@Override
 	public UserRecycling addRecyclingToUser(UserRecycling userRecycling) {
-		//User user = ur.findByUsername(username);
-		//userRecycling.setUserId(user.getId());
 		return urr.save(userRecycling); //save receives an entity. We save a UserRecycling
 	}
 
 	@Override
-	public List<UserRecycling> getAllRecyclingFromUser(String username) {
-		return urr.findBy();
+	public List<UserRecycling> getAllRecyclingFromUser(User user) {
+		return urr.findByUser(user);
 	}
 }

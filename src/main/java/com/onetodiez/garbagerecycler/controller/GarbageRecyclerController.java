@@ -82,7 +82,8 @@ public class GarbageRecyclerController {
 	// Get a UserRecycling list
 	@GetMapping(path = "/api/users_recycling/{username}/")
 	public ResponseEntity<List<UserRecycling>> getUserRecycling(@PathVariable(value = "username") String username) {
-		List<UserRecycling> list = urs.getAllRecyclingFromUser(username);
+		User user = us.findByUsername(username);	// get a user by its username
+		List<UserRecycling> list = urs.getAllRecyclingFromUser(user);
 
 		return ResponseEntity.ok(list);
 	}
