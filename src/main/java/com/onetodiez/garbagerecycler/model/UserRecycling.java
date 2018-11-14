@@ -1,14 +1,21 @@
 package com.onetodiez.garbagerecycler.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 
@@ -18,11 +25,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table
-public class UserRecycling {
+public class UserRecycling { 
+	
 	@Id
-	@Column(name = "id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "fecha", nullable = false)
 	private Date date;
 
@@ -47,19 +57,26 @@ public class UserRecycling {
 	 * Si guardo el id del user creo una columna id_user y,
 	 * en save de UserRecycling le seteo a userRecycling
 	 *  el id del getUserByUsername? 
+	 *  
+	 *  
+	 *  Si pongo que tenga un User y que matchee con User.id  en el json puedo enviar "User":{} ?
 	*/
 	
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
-	@JoinColumn(name = "id_user", insertable = false, updatable = false) 
-	private Long user_id;
+	// Defining Many to One relationship between UserRecyling and User entities
+	//@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+	//@JoinColumn(name = "user_id", insertable = false, updatable = false) 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 	
-	public Long getUserId() {
-		return user_id;
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
-	public void setUserId(Long user_id) {
-		this.user_id = user_id;
-	}
+	public User getUser() {
+		return user;
+	} 
 	
 	public Long getId() {
 		return id;
@@ -72,9 +89,10 @@ public class UserRecycling {
 	public Date getDate() {
 		return date;
 	}
-
-	public void setDate(Date date) {
-		this.date = date;
+	
+	@PrePersist
+	public void setDate() {
+		this.date = new Date(new java.util.Date().getTime());
 	}
 
 	public int getBottles() {

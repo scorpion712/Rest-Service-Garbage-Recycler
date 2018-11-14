@@ -1,5 +1,5 @@
---DROP TABLE IF EXISTS USER;
---DROP TABLE IF EXISTS USER_RECYCLING;
+-- DROP TABLE IF EXISTS USER;
+-- DROP TABLE IF EXISTS USER_RECYCLING;
 /*
 CREATE TABLE USER (
 	id BIGINT(19) NOT NULL,
@@ -37,15 +37,29 @@ INSERT INTO USER  (id, firstname, lastname, username, address, mail)
 VALUES (3, 'Lisa', 'Simpson', 'lisams', 'Av. Siempre Viva 742', 'lisasax@gmail.com');
 
 -- Insert the users' recycling data
-INSERT INTO USER_RECYCLING (id, fecha, id_user, bottles, tetrabriks, paperboard, glass, cans) 
+INSERT INTO USER_RECYCLING (id, fecha, user_id, bottles, tetrabriks, paperboard, glass, cans) 
 VALUES (1, TO_DATE('1/11/2018', 'DD/MM/YYYY'), 2, 200, 10, 6, 5, 100);
-INSERT INTO USER_RECYCLING (id, fecha, id_user, bottles, tetrabriks, paperboard, glass, cans) 
+INSERT INTO USER_RECYCLING (id, fecha, user_id, bottles, tetrabriks, paperboard, glass, cans) 
 VALUES (2, TO_DATE('1/11/2018', 'DD/MM/YYYY'), 1, 100, 80, 40, 45, 10);
-INSERT INTO USER_RECYCLING (id, fecha, id_user, bottles, tetrabriks, paperboard, glass, cans) 
+INSERT INTO USER_RECYCLING (id, fecha, user_id, bottles, tetrabriks, paperboard, glass, cans) 
  VALUES (3, TO_DATE('2/11/2018', 'DD/MM/YYYY'), 3, 100, 80, 40, 45, 10);
-INSERT INTO USER_RECYCLING (id, fecha, id_user, bottles, tetrabriks, paperboard, glass, cans) 
+INSERT INTO USER_RECYCLING (id, fecha, user_id, bottles, tetrabriks, paperboard, glass, cans) 
  VALUES (4, TO_DATE('3/11/2018', 'DD/MM/YYYY'), 3, 120, 100, 60, 75, 50);
-INSERT INTO USER_RECYCLING (id, fecha, id_user, bottles, tetrabriks, paperboard, glass, cans) 
+INSERT INTO USER_RECYCLING (id, fecha, user_id, bottles, tetrabriks, paperboard, glass, cans) 
  VALUES (5, TO_DATE('4/11/2018', 'DD/MM/YYYY'), 1, 50, 20, 10, 60, 100);
-INSERT INTO USER_RECYCLING (id, fecha, id_user, bottles, tetrabriks, paperboard, glass, cans) 
+INSERT INTO USER_RECYCLING (id, fecha, user_id, bottles, tetrabriks, paperboard, glass, cans) 
  VALUES (6, TO_DATE('7/11/2018', 'DD/MM/YYYY'), 3, 90, 40, 25, 70, 67);
+ /*
+INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
+VALUES (1, TO_DATE('1/11/2018', 'DD/MM/YYYY'), 'elbarto', 200, 10, 6, 5, 100);
+INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
+VALUES (2, TO_DATE('1/11/2018', 'DD/MM/YYYY'), 'homerojs', 100, 80, 40, 45, 10);
+INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
+ VALUES (3, TO_DATE('2/11/2018', 'DD/MM/YYYY'), 'lisams', 100, 80, 40, 45, 10);
+INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
+ VALUES (4, TO_DATE('3/11/2018', 'DD/MM/YYYY'), 'lisams', 120, 100, 60, 75, 50);
+INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
+ VALUES (5, TO_DATE('4/11/2018', 'DD/MM/YYYY'), 'homerojs', 50, 20, 10, 60, 100);
+INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
+ VALUES (6, TO_DATE('7/11/2018', 'DD/MM/YYYY'), 'lisams', 90, 40, 25, 70, 67);
+ */

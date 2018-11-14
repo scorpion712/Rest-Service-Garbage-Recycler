@@ -13,7 +13,7 @@ import com.onetodiez.garbagerecycler.model.UserRecycling;
 public interface UserRecyclingService {
 	
 	// Add recycling to user
-	UserRecycling addRecyclingToUser(String username, UserRecycling userRecycling);
+	UserRecycling addRecyclingToUser(UserRecycling userRecycling);
 	
 	// Get user recycling from a given username
 	List<UserRecycling> getAllRecyclingFromUser(String username);

@@ -66,10 +66,11 @@ public class GarbageRecyclerController {
 
 	//Post a UserRecycling
 	@PostMapping(path = "/api/users_recycling")
-	public ResponseEntity<UserRecycling> addUserRecycling(@RequestBody UserRecycling userRecycling, @RequestBody String username) {
-		User user = us.findByUsername(username);
-		UserRecycling newUserRecycling = urs.addRecyclingToUser(username, userRecycling);
-		//newUserRecycling.setUserId(user.getId()); // like set the "FK"
+	public ResponseEntity<UserRecycling> addUserRecycling(@RequestBody UserRecycling userRecycling) {
+		User user = us.findByUsername(userRecycling.getUser().getUsername());	// find a user by its username
+		userRecycling.setUser(user); // set the user correspondent to the userRecycling
+		
+		UserRecycling newUserRecycling = urs.addRecyclingToUser(userRecycling);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")

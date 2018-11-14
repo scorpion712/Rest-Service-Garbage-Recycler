@@ -4,12 +4,19 @@ package com.onetodiez.garbagerecycler.model;
  * @author: Diez, Lautaro
  */
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Id; 
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table
@@ -21,7 +28,7 @@ public class User {
 	@Column(name = "lastname", nullable = false)
 	private String lastname;
 	
-	@Column(name = "username", nullable = false)
+	@Column(name = "username", nullable = false, unique = true)
 	private String username;
 	
 	@Column(name = "address", nullable = true)
@@ -34,6 +41,20 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	// Defining OneToMany relationship between User and UserRecycling entities.
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<UserRecycling> userRecycling;
+	 
+	 public Set<UserRecycling> getUserRecycling() {
+		 return userRecycling;
+	 }
+	 
+	 public void setUserRecycling(Set<UserRecycling> userRecyclingList) {
+		 this.userRecycling = userRecyclingList;
+	 }
+	
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -114,4 +135,5 @@ public class User {
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
+	
 }
