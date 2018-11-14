@@ -18,6 +18,6 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface UserRecyclingRepository extends PagingAndSortingRepository<UserRecycling, Long>{
 	
-	List<UserRecycling> findByUser(User user); // this is automatic
+	List<UserRecycling> findByUser(User user); // this is automatic and returns a list of UserRecycling that matches with the given user
 	
 }

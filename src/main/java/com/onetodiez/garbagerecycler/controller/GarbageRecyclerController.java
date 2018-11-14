@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+ 
 import com.onetodiez.garbagerecycler.model.User;
 import com.onetodiez.garbagerecycler.model.UserRecycling;
 import com.onetodiez.garbagerecycler.service.UserRecyclingService;
@@ -31,9 +31,7 @@ public class GarbageRecyclerController {
 	@Autowired
 	UserRecyclingService urs;
 
-	//@Autowired
-	//RecyclingService rs;
-
+	// Post a new User (register user)
 	@PostMapping(path = "/api/users")
 	public ResponseEntity<User> registerUser(@RequestBody User user){
 		User newUser = us.register(user);
@@ -44,24 +42,6 @@ public class GarbageRecyclerController {
 				.toUri();
 		return ResponseEntity.created(location).body(newUser);
 	}
-
-/*		Es útil ?? El servicio no habla de que lo provee
- * 
-	@GetMapping(path = "/api/users")
-	public ResponseEntity<List<User>> getUsers( ){
-		List<User> list = us.getAllUsers();
-
-		return ResponseEntity.ok(list);
-	}
-*/
-
-	@GetMapping(path = "/api/users/{username}/")
-	public ResponseEntity<User> getUser(@PathVariable(value = "username") String username){
-		User user = us.findByUsername(username);
-
-		return ResponseEntity.ok(user);
-	}
-
 
 
 	//Post a UserRecycling
@@ -87,14 +67,60 @@ public class GarbageRecyclerController {
 
 		return ResponseEntity.ok(list);
 	}
-/*
-	// Get a user's recycling
-	@GetMapping(path = "/api/recycling/{username}/")
-	public ResponseEntity<Recycling> getRecycling(@PathVariable(value = "username") String username) {
-		Recycling recycling = rs.findByUsername(username);
 
-		return ResponseEntity.ok(recycling);
+	// Get a user's recycling
+	/*///////////////////////////////////////////////////
+	///////// change the commented parameter	/////////
+	////////////////////////////////////////////////////
+	*/
+	
+	@GetMapping(path = "/api/recycling/{username}/")
+	public ResponseEntity</*Recycling*/User> getAllRecycling(@PathVariable(value = "username") String username) {
+		// implement
+		/*
+		Recycling recycling = new Recycling(); 
+		return ResponseEntity.ok(recycling);*/
+		return null;
 	}
- */
+
+/*		
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////
+ ////////////		HASTA ACA LAS CUATRO OPERACIONES PEDIDAS, FALTA getAllRecycling 	//////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ * 
+ * 	Dudas: 
+ * 			- Como implementar el getAllRecycling
+ * 			- métodos de getUser y getUsers, implementarlos¿? No los pide, sirven para ver todos o un user
+ * 			- uso de hashCode y equals
+ * 
+ * 	Faltantes:
+ * 			- informe
+ * 			- implementar las exceptions:
+ * 					- registrar un username ya en uso --> informar de que existe, que pruebe con otro
+ * 					- agregar un reciclado	--> si el username no existe, informar de error 
+ * 											--> campos vacíos se completan con 0
+ * 					- getAllRecycling	--> si el username no existe notificar
+ * 					- getAllRecyclingList	--> si el username no existe notificar
+ * 											--> si no tiene se devuelve una lista vacía
+
+	@GetMapping(path = "/api/users")
+	public ResponseEntity<List<User>> getUsers( ){
+		List<User> list = us.getAllUsers();
+
+		return ResponseEntity.ok(list);
+	}
+*/
+	
+	// Get a user data by its username 
+	@GetMapping(path = "/api/users/{username}/")
+	public ResponseEntity<User> getUser(@PathVariable(value = "username") String username){
+		User user = us.findByUsername(username);
+
+		return ResponseEntity.ok(user);
+	}
+
+ 
 
 }

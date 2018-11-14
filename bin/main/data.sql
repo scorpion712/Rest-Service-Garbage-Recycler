@@ -1,6 +1,13 @@
--- DROP TABLE IF EXISTS USER;
--- DROP TABLE IF EXISTS USER_RECYCLING;
 /*
+@author: Oneto, Fernando
+@author: Diez, Lautaro
+
+This is commented because when we create the tables in this way, we obtain errors parsing de json to insert values, like (id can not be null). 
+So we use this script to insert data to the tables. 
+
+DROP TABLE IF EXISTS USER;
+DROP TABLE IF EXISTS USER_RECYCLING;
+
 CREATE TABLE USER (
 	id BIGINT(19) NOT NULL,
 	firstname VARCHAR(80) NOT NULL,
@@ -49,17 +56,3 @@ INSERT INTO USER_RECYCLING (id, fecha, user_id, bottles, tetrabriks, paperboard,
  VALUES (5, TO_DATE('4/11/2018', 'DD/MM/YYYY'), 1, 50, 20, 10, 60, 100);
 INSERT INTO USER_RECYCLING (id, fecha, user_id, bottles, tetrabriks, paperboard, glass, cans) 
  VALUES (6, TO_DATE('7/11/2018', 'DD/MM/YYYY'), 3, 90, 40, 25, 70, 67);
- /*
-INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
-VALUES (1, TO_DATE('1/11/2018', 'DD/MM/YYYY'), 'elbarto', 200, 10, 6, 5, 100);
-INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
-VALUES (2, TO_DATE('1/11/2018', 'DD/MM/YYYY'), 'homerojs', 100, 80, 40, 45, 10);
-INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
- VALUES (3, TO_DATE('2/11/2018', 'DD/MM/YYYY'), 'lisams', 100, 80, 40, 45, 10);
-INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
- VALUES (4, TO_DATE('3/11/2018', 'DD/MM/YYYY'), 'lisams', 120, 100, 60, 75, 50);
-INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
- VALUES (5, TO_DATE('4/11/2018', 'DD/MM/YYYY'), 'homerojs', 50, 20, 10, 60, 100);
-INSERT INTO USER_RECYCLING (id, fecha, username, bottles, tetrabriks, paperboard, glass, cans) 
- VALUES (6, TO_DATE('7/11/2018', 'DD/MM/YYYY'), 'lisams', 90, 40, 25, 70, 67);
- */

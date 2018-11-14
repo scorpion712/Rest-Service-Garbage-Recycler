@@ -50,22 +50,11 @@ public class UserRecycling {
 	
 	@Column(name = "cans", nullable = false)
 	private int cans;
-	
-	/**
-	 *  Como el usuario?? 
-	 * Seria id_user una fk a user ? Como se hace?
-	 * Si guardo el id del user creo una columna id_user y,
-	 * en save de UserRecycling le seteo a userRecycling
-	 *  el id del getUserByUsername? 
-	 *  
-	 *  
-	 *  Si pongo que tenga un User y que matchee con User.id  en el json puedo enviar "User":{} ?
-	*/
-	
+		
 	// Defining Many to One relationship between UserRecyling and User entities
 	//@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
 	//@JoinColumn(name = "user_id", insertable = false, updatable = false) 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
 	@JoinColumn(name = "user_id")
 	private User user;
 	
@@ -133,6 +122,28 @@ public class UserRecycling {
 
 	public void setCans(int cans) {
 		this.cans = cans;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserRecycling other = (UserRecycling) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.getUsername().equals(other.user.getUsername()))
+			return false;
+		return true;
 	}
 	
 	@Override

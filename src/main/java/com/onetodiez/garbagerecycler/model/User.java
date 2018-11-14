@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id; 
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,8 +46,8 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<UserRecycling> userRecycling;
-	 
-	 public Set<UserRecycling> getUserRecycling() {
+	
+	public Set<UserRecycling> getUserRecycling() {
 		 return userRecycling;
 	 }
 	 
