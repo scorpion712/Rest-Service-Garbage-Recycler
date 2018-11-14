@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.onetodiez.garbagerecycler.model.Recycling;
 import com.onetodiez.garbagerecycler.model.User;
 import com.onetodiez.garbagerecycler.model.UserRecycling;
-import com.onetodiez.garbagerecycler.service.RecyclingService;
 import com.onetodiez.garbagerecycler.service.UserRecyclingService;
 import com.onetodiez.garbagerecycler.service.UserService;
 

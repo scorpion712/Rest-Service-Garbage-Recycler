@@ -1,11 +1,5 @@
 package com.onetodiez.garbagerecycler.service;
 
-/*
-* @author: Oneto, Fernando
-* @author: Diez, Lautaro
-*/
-//import java.util.List;
-
 import com.onetodiez.garbagerecycler.model.User;
 
 public interface UserService {

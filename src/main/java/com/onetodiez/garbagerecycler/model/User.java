@@ -1,9 +1,9 @@
 package com.onetodiez.garbagerecycler.model;
-
 /**
-* @author: Oneto, Fernando
-* @author: Diez, Lautaro
-*/
+ * @author: Oneto, Fernando
+ * @author: Diez, Lautaro
+ */
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,40 +14,40 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class User {
-
+	
 	@Column(name = "firstname", nullable = false)
-    private String firstName;
-
+	private String firstname;
+	
 	@Column(name = "lastname", nullable = false)
-	  private String lastName;
-
-	@Column(name = "username", nullable = true)
-    private String username;
-
+	private String lastname;
+	
+	@Column(name = "username", nullable = false)
+	private String username;
+	
 	@Column(name = "address", nullable = true)
-		private String address;
-
+	private String address;
+	
 	@Column(name = "mail", nullable = true)
-		private String mail;
-
+	private String mail;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getUsername() {
@@ -82,16 +82,6 @@ public class User {
 		this.id = id;
 	}
 
-	// Do it using username, not name
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -114,28 +104,14 @@ public class User {
 		return true;
 	}
 
-	/*
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			User other = (User) obj;
-			if (id == null) {
-				if (other.getId() != null)
-					return false;
-			} else if (!id.equals(other.getId()))
-				return false;
-			if (username == null) {
-				if (other.getUsername() != null)
-					return false;
-			} else if (!username.equals(other.getUsername))
-				return false;
-			return true;
-		}
-*/
-
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
+		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
 }

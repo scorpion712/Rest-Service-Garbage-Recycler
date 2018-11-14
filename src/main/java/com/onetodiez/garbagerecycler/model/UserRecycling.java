@@ -4,6 +4,10 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -15,10 +19,11 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class UserRecycling {
+	@Id
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "date", nullable = false)
+	@Column(name = "fecha", nullable = false)
 	private Date date;
 
 	@Column(name = "bottles", nullable = false)
@@ -42,9 +47,10 @@ public class UserRecycling {
 	 * Si guardo el id del user creo una columna id_user y,
 	 * en save de UserRecycling le seteo a userRecycling
 	 *  el id del getUserByUsername? 
-	 
-
-	@Column(name = "user_id", nullable = false)
+	*/
+	
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+	@JoinColumn(name = "id_user", insertable = false, updatable = false) 
 	private Long user_id;
 	
 	public Long getUserId() {
@@ -54,7 +60,7 @@ public class UserRecycling {
 	public void setUserId(Long user_id) {
 		this.user_id = user_id;
 	}
-	*/
+	
 	public Long getId() {
 		return id;
 	}
