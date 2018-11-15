@@ -8,6 +8,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.onetodiez.garbagerecycler.exceptions.IncorrectJsonFieldsException;
 import com.onetodiez.garbagerecycler.exceptions.UserAlreadyExistsException;
 import com.onetodiez.garbagerecycler.exceptions.UserNotFoundException;
+import com.onetodiez.garbagerecycler.model.Recycling;
 import com.onetodiez.garbagerecycler.model.User;
 import com.onetodiez.garbagerecycler.model.UserRecycling;
+import com.onetodiez.garbagerecycler.service.RecyclingService;
 import com.onetodiez.garbagerecycler.service.UserRecyclingService;
 import com.onetodiez.garbagerecycler.service.UserService;
 
@@ -32,6 +35,9 @@ public class GarbageRecyclerController {
 
 	@Autowired
 	UserRecyclingService urs;
+	
+	@Autowired
+	RecyclingService rs;
 
 	// Post a new User (register user)
 	@PostMapping(path = "/api/users")
@@ -89,19 +95,15 @@ public class GarbageRecyclerController {
 	}
 
 	// Get a user's recycling
-	/*
-	 ///////////////////////////////////////////////////
-	 ///////	change the commented parameter /////////
-	 ///////////////////////////////////////////////////
-	 */
-
 	@GetMapping(path = "/api/recycling/{username}/")
-	public ResponseEntity</* Recycling */User> getAllRecycling(@PathVariable(value = "username") String username) {
-		// implement
-		/*
-		 * Recycling recycling = new Recycling(); return ResponseEntity.ok(recycling);
-		 */
-		return null;
+	public ResponseEntity<Recycling> getAllRecycling(@PathVariable(value = "username") String username) {
+		User user = us.findByUsername(username);
+		if (user == null) {
+			throw new UserNotFoundException();
+		}
+		Recycling recycling = rs.getAllRecycling(user); 
+		return new ResponseEntity<>(recycling, HttpStatus.OK);
+		
 	}
 
 	/*
