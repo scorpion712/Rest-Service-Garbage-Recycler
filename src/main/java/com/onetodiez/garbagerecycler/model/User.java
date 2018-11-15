@@ -4,7 +4,6 @@ package com.onetodiez.garbagerecycler.model;
  * @author: Diez, Lautaro
  */
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,28 +12,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id; 
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany; 
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table
-public class User {
-	
+public class User { 
+	@Size(min=1, max=50)
 	@Column(name = "firstname", nullable = false)
 	private String firstname;
-	
+
+	@Size(min=1, max=50)
 	@Column(name = "lastname", nullable = false)
 	private String lastname;
 	
+	@Size(min=1, max=50)
 	@Column(name = "username", nullable = false, unique = true)
 	private String username;
-	
+
+	@Size(min=1, max=255)
 	@Column(name = "address", nullable = true)
 	private String address;
-	
+
+	@Size(min=1, max=255)
 	@Column(name = "mail", nullable = true)
 	private String mail;
 	

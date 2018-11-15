@@ -14,6 +14,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -36,24 +39,28 @@ public class UserRecycling {
 	@Column(name = "fecha", nullable = false)
 	private Date date;
 
+	@Min(0)
 	@Column(name = "bottles", nullable = false)
 	private int bottles;
 
+	@Min(0)
 	@Column(name = "tetrabriks", nullable = false)
 	private int tetrabriks;
 
+	@Min(0)
 	@Column(name = "paperboard", nullable = false)
 	private int paperboard;
 
+	@Min(0)
 	@Column(name = "glass", nullable = false)
 	private int glass;
-	
+
+	@Min(0)
 	@Column(name = "cans", nullable = false)
 	private int cans;
 		
-	// Defining Many to One relationship between UserRecyling and User entities
-	//@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
-	//@JoinColumn(name = "user_id", insertable = false, updatable = false) 
+	// Defining Many to One relationship between UserRecyling and User entities 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
 	@JoinColumn(name = "user_id")
 	private User user;

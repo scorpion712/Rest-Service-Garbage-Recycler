@@ -42,7 +42,6 @@ INSERT INTO USER (id, firstname, lastname, username, address, mail)
 VALUES (2, 'Bart', 'Simpson', 'elbarto', 'Av. Siempre Viva 742', 'elbarto@gmail.com');
 INSERT INTO USER  (id, firstname, lastname, username, address, mail) 
 VALUES (3, 'Lisa', 'Simpson', 'lisams', 'Av. Siempre Viva 742', 'lisasax@gmail.com');
-
 -- Insert the users' recycling data
 INSERT INTO USER_RECYCLING (id, fecha, user_id, bottles, tetrabriks, paperboard, glass, cans) 
 VALUES (1, TO_DATE('1/11/2018', 'DD/MM/YYYY'), 2, 200, 10, 6, 5, 100);

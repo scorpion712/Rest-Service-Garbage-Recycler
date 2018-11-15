@@ -1,4 +1,5 @@
 package com.onetodiez.garbagerecycler.controller;
+
 /**
 * @author: Oneto, Fernando
 * @author: Diez, Lautaro
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
- 
+
+import com.onetodiez.garbagerecycler.exceptions.IncorrectJsonFieldsException;
+import com.onetodiez.garbagerecycler.exceptions.UserAlreadyExistsException;
+import com.onetodiez.garbagerecycler.exceptions.UserNotFoundException;
 import com.onetodiez.garbagerecycler.model.User;
 import com.onetodiez.garbagerecycler.model.UserRecycling;
 import com.onetodiez.garbagerecycler.service.UserRecyclingService;
 import com.onetodiez.garbagerecycler.service.UserService;
-
-
 
 @RestController
 public class GarbageRecyclerController {
@@ -33,94 +35,103 @@ public class GarbageRecyclerController {
 
 	// Post a new User (register user)
 	@PostMapping(path = "/api/users")
-	public ResponseEntity<User> registerUser(@RequestBody User user){
-		User newUser = us.register(user);
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(newUser.getId())
-				.toUri();
-		return ResponseEntity.created(location).body(newUser);
+	public ResponseEntity<User> registerUser(@RequestBody User user) {
+		User newUser = us.findByUsername(user.getUsername()); // get the user to check if its exists
+		try { 
+			newUser = us.register(user);	// try to register the new user
+			URI location = ServletUriComponentsBuilder
+					.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(newUser.getId())
+					.toUri();	// setting the new user id
+			return ResponseEntity.created(location).body(newUser); // send the response
+		} catch (Exception e) {
+			if (newUser == null) { // if the user given does not exists 
+				throw new IncorrectJsonFieldsException(); // there are errors on fields
+			} else {
+				throw new UserAlreadyExistsException();	// there is a user registered with the same username
+			}
+		}
 	}
 
-
-	//Post a UserRecycling
+	// Post a UserRecycling
 	@PostMapping(path = "/api/users_recycling")
 	public ResponseEntity<UserRecycling> addUserRecycling(@RequestBody UserRecycling userRecycling) {
-		User user = us.findByUsername(userRecycling.getUser().getUsername());	// find a user by its username
-		userRecycling.setUser(user); // set the user correspondent to the userRecycling
-		
-		UserRecycling newUserRecycling = urs.addRecyclingToUser(userRecycling);
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(newUserRecycling.getId())
-				.toUri();
-		return ResponseEntity.created(location).body(newUserRecycling);
+		User user = us.findByUsername(userRecycling.getUser().getUsername()); // find a user by its username
+		try {
+			userRecycling.setUser(user); // set the user correspondent to the userRecycling
+			UserRecycling newUserRecycling = urs.addRecyclingToUser(userRecycling);
+			URI location = ServletUriComponentsBuilder
+					.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(newUserRecycling.getId())
+					.toUri();	// setting the new User Recycling id
+			
+			return ResponseEntity.created(location).body(newUserRecycling);
+		} catch (Exception e) {
+			if (user == null) {
+				throw new UserNotFoundException();	// if the given username does not exists
+			} else {
+				throw new IncorrectJsonFieldsException();	// there are errors on fields
+			}
+		}
 	}
 
 	// Get a UserRecycling list
 	@GetMapping(path = "/api/users_recycling/{username}/")
 	public ResponseEntity<List<UserRecycling>> getUserRecycling(@PathVariable(value = "username") String username) {
-		User user = us.findByUsername(username);	// get a user by its username
-		List<UserRecycling> list = urs.getAllRecyclingFromUser(user);
-
+		User user = us.findByUsername(username); // get a user by its username
+		List<UserRecycling> list = urs.getAllRecyclingFromUser(user);	// get all the user's recycling list
+		if (list.size() == 0) {
+			throw new UserNotFoundException();
+		}
 		return ResponseEntity.ok(list);
 	}
 
 	// Get a user's recycling
-	/*///////////////////////////////////////////////////
-	///////// change the commented parameter	/////////
-	////////////////////////////////////////////////////
-	*/
-	
+	/*
+	 ///////////////////////////////////////////////////
+	 ///////	change the commented parameter /////////
+	 ///////////////////////////////////////////////////
+	 */
+
 	@GetMapping(path = "/api/recycling/{username}/")
-	public ResponseEntity</*Recycling*/User> getAllRecycling(@PathVariable(value = "username") String username) {
+	public ResponseEntity</* Recycling */User> getAllRecycling(@PathVariable(value = "username") String username) {
 		// implement
 		/*
-		Recycling recycling = new Recycling(); 
-		return ResponseEntity.ok(recycling);*/
+		 * Recycling recycling = new Recycling(); return ResponseEntity.ok(recycling);
+		 */
 		return null;
 	}
 
-/*		
- /////////////////////////////////////////////////////////////////////////////////////////////////////////
- /////////////////////////////////////////////////////////////////////////////////////////////////////////
- ////////////		HASTA ACA LAS CUATRO OPERACIONES PEDIDAS, FALTA getAllRecycling 	//////////////////
- /////////////////////////////////////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////////////////////////////////// 
- * 
- * 	Dudas: 
- * 			- Como implementar el getAllRecycling
- * 			- métodos de getUser y getUsers, implementarlos¿? No los pide, sirven para ver todos o un user
- * 			- uso de hashCode y equals
- * 
- * 	Faltantes:
- * 			- informe
- * 			- implementar las exceptions:
- * 					- registrar un username ya en uso --> informar de que existe, que pruebe con otro
- * 					- agregar un reciclado	--> si el username no existe, informar de error 
- * 											--> campos vacíos se completan con 0
- * 					- getAllRecycling	--> si el username no existe notificar
- * 					- getAllRecyclingList	--> si el username no existe notificar
- * 											--> si no tiene se devuelve una lista vacía
+	/*
+	 * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 * /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 * //////////// 		HASTA ACA LAS CUATRO OPERACIONES PEDIDAS, FALTA getAllRecycling -	///////////////////
+	 * ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 * ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 * 
+	 * Dudas: 
+	 * 		- Como implementar el getAllRecycling 
+	 * 		- métodos de getUser y getUsers, implementarlos¿? No los pide, sirven para ver todos o un user
+	 * 		- uso de hashCode y equals
+	 * 
+	 * Faltantes: 
+	 * 		- informe 
+	 * 		
+	 * 
+	 * @GetMapping(path = "/api/users") public ResponseEntity<List<User>> getUsers(
+	 * ){ List<User> list = us.getAllUsers();
+	 * 
+	 * return ResponseEntity.ok(list); }
+	 */
 
-	@GetMapping(path = "/api/users")
-	public ResponseEntity<List<User>> getUsers( ){
-		List<User> list = us.getAllUsers();
-
-		return ResponseEntity.ok(list);
-	}
-*/
-	
-	// Get a user data by its username 
+	// Get a user data by its username
 	@GetMapping(path = "/api/users/{username}/")
-	public ResponseEntity<User> getUser(@PathVariable(value = "username") String username){
+	public ResponseEntity<User> getUser(@PathVariable(value = "username") String username) {
 		User user = us.findByUsername(username);
 
 		return ResponseEntity.ok(user);
 	}
-
- 
 
 }
