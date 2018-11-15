@@ -19,7 +19,6 @@ public class RecyclingServiceImpl implements RecyclingService {
 	@Override
 	public Recycling getAllRecycling(User user) {
 		List<UserRecycling> list = urr.findByUser(user);
-		Recycling recycling = new Recycling(list);
-		return recycling;
+		return new Recycling(list);
 	}
 }
