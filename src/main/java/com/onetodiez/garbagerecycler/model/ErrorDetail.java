@@ -1,5 +1,11 @@
 package com.onetodiez.garbagerecycler.model;
-
+/**
+ * This class is used to return an error or exception in a customized Json format
+ * 
+ * @author: Oneto, Fernando
+ * @author: Diez, Lautaro
+ * 
+ */
 import java.util.Date;
 /**
  * 

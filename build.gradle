@@ -10,6 +10,12 @@ buildscript {
 	}
 }
 
+plugins {
+    id 'java'
+    id 'com.gradle.build-scan' version '1.16'
+    id 'org.springframework.boot' version '2.0.5.RELEASE'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -31,4 +37,17 @@ dependencies {
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	runtimeOnly('com.h2database:h2')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	
+	implementation 'org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE' 
+
+    components {
+        withModule('org.springframework:spring-beans') {
+            allVariants {
+                withDependencyConstraints {
+                    // Need to patch constraints because snakeyaml is an optional dependency
+                    it.findAll { it.name == 'snakeyaml' }.each { it.version { strictly '1.19' } }
+                }
+            }
+        }
+    }
 }

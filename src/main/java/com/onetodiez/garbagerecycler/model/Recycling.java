@@ -1,5 +1,10 @@
 package com.onetodiez.garbagerecycler.model;
-
+/** 
+ * 
+ * @author: Oneto, Fernando
+ * @author: Diez, Lautaro
+ * 
+ */
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
