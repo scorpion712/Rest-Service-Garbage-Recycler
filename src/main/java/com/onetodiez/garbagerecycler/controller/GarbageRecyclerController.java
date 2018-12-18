@@ -61,9 +61,10 @@ public class GarbageRecyclerController {
 	}
 
 	// Post a UserRecycling
-	@PostMapping(path = "/api/users_recycling")
-	public ResponseEntity<UserRecycling> addUserRecycling(@RequestBody UserRecycling userRecycling) {
-		User user = us.findByUsername(userRecycling.getUser().getUsername()); // find a user by its username
+	@PostMapping(path = "/api/{username}/recycling")
+	public ResponseEntity<UserRecycling> addUserRecycling(@PathVariable(value = "username") String username,
+															@RequestBody UserRecycling userRecycling) {
+		User user = us.findByUsername(username); // find a user by its username
 		try {
 			userRecycling.setUser(user); // set the user correspondent to the userRecycling
 			UserRecycling newUserRecycling = urs.addRecyclingToUser(userRecycling);
